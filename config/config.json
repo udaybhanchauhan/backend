@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": null,
+    "database": "auth_system",
+    "host": "192.169.10.200",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": null,
+    "database": "auth_system",
+    "host": "192.169.10.200",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": null,
+    "database": "auth_system",
+    "host": "192.169.10.200",
+    "dialect": "postgres"
+  }
+}
