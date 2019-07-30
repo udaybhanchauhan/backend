@@ -14,7 +14,7 @@ var connection= require ('../config/config');
 router.post('/userList', function(req, res) {
   console.log("body: %j", req.body);
   
-  const getAllUserQuery=`select * from emp `;
+  const getAllUserQuery=`select * from ips_users where is_deleted=0`;
   console.log("user query="+getAllUserQuery);
 
   const resData=connection.connection.query(getAllUserQuery,function(error, result){

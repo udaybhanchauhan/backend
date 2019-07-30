@@ -3,11 +3,31 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var bodyParser=require('body-parser');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var authRouter = require('./routes/auth');
+var middleware= require('./middleware');
+var clientsRouter=require('./routes/client');
+var ipInfo=require('./routes/serverInfo');
+
 var app = express();
+app.use(function (req, res, next) {
+// Website you wish to allow to connect
+res.setHeader('Access-Control-Allow-Origin', '*');
+// Request methods you wish to allow
+res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+// Request headers you wish to allow
+res.setHeader('Access-Control-Allow-Headers', '*');
+// Set to true if you need the website to include cookies in the requests sent
+// to the API (e.g. in case you use sessions)
+res.setHeader('Access-Control-Allow-Credentials', true);
+// Pass to next layer of middleware
+next();
+});
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,7 +40,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+app.use('/clients', middleware.checkToken, clientsRouter);
+//app.use('/billing', middleware.checkToken, billingRouter);
+app.use('/server', ipInfo);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

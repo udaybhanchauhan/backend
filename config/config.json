@@ -19,5 +19,6 @@
     "database": "auth_system",
     "host": "192.169.10.200",
     "dialect": "postgres"
-  }
+  },
+  "secret":"worldisfullofdevelopers"
 }
