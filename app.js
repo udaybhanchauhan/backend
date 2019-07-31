@@ -3,14 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var bodyParser=require('body-parser');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var fetchReview= require('./routes/fetch_review');
 var authRouter = require('./routes/auth');
-var middleware= require('./middleware');
-var clientsRouter=require('./routes/client');
-var ipInfo=require('./routes/serverInfo');
+
 
 var app = express();
 app.use(function (req, res, next) {
@@ -42,10 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
-app.use('/clients', middleware.checkToken, clientsRouter);
-//app.use('/billing', middleware.checkToken, billingRouter);
-app.use('/server', ipInfo);
-
+app.use('/emp',fetchReview);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var app = express();
 var middleware=require('../middleware');
 var connection= require ('../config/config');
 
@@ -10,7 +9,7 @@ router.post('/authenticate',function(req,res){
     var requestedUser;
     requestedUser=req.body;
     const getUserQuery=`select * from emp where emp_id='${requestedUser.username}' and password='${requestedUser.password}'`;
-    console.log("user query="+getUserQuery);
+    
 
     connection.connection.query(getUserQuery,function(error, result){
             if(error){
@@ -32,7 +31,7 @@ router.post('/authenticate',function(req,res){
     
     const validatePasswordQuery=`select password from emp where emp_id='${requestedClient.empId}' `;
     
-    console.log("validate Password Query="+validatePasswordQuery);
+   
 
     if(requestedClient.empId && requestedClient.password){
         const resData=connection.connection.query(validatePasswordQuery,function(error, result){
@@ -42,7 +41,7 @@ router.post('/authenticate',function(req,res){
                 const dbPassword=result['password'];
                if(dbPassword===requestedClient.password){
                     const updateUserRecord=`update emp  set password=${requestedClient.password} where emp_id='${requestedClient.empId}'`;
-                    const updatedRecord=connection.connection.query(updateUserRecord,function(updateErr, updateRes){
+                    connection.connection.query(updateUserRecord,function(updateErr, updateRes){
                         if(updateErr){
                             res.status(400).send({success: false,err: updateErr});
                         }else{
